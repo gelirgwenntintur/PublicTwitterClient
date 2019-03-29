@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PublicTwitterClient</string>
+    <string name="action_exit">Exit</string>
+
+    <string name="label_search_hint">Enter username&#8230;</string>
+    <string name="label_search">Search</string>
+    <string name="label_user_photo">User photo</string>
+
+    <string name="error_no_data">No results were found.</string>
+    <string name="error_getting_data">An error occurred. Please try again later</string>
+    <string name="error_title_invalid_username">Invalid username</string>
+    <string name="error_title_invalid_username_description">Username cannot be longer than 15 characters and only contain (letters A&#8211;Z, numbers 0&#8211;9) with the exception of underscores.</string>
+    <string name="error_internet_required">Internet connection required</string>
+    <string name="error_title">Error</string>
+
+    <string name="dialog_exit_button_yes">Yes</string>
+    <string name="dialog_exit_button_No">No</string>
+    <string name="dialog_exit_message">Do you want to exit the application?</string>
+</resources>
