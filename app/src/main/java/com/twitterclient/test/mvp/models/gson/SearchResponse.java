@@ -1,6 +1,7 @@
-package com.twitterclient.test.api.data;
+package com.twitterclient.test.mvp.models.gson;
 
 import com.google.gson.annotations.SerializedName;
+import com.twitterclient.test.mvp.models.Tweet;
 
 import java.util.List;
 

@@ -1,33 +1,32 @@
-package com.twitterclient.test.mvp.search;
+package com.twitterclient.test.mvp.presenters;
 
+import com.arellomobile.mvp.InjectViewState;
+import com.twitterclient.test.PublicTwitterClientApp;
 import com.twitterclient.test.R;
-import com.twitterclient.test.mvp.base.BasePresenter;
+import com.twitterclient.test.mvp.views.SearchView;
 import com.twitterclient.test.utils.Logger;
 import com.twitterclient.test.utils.NetworkUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SearchTweetPresenter extends BasePresenter<SearchTweetContract.View>
-    implements SearchTweetContract.Presenter {
+@InjectViewState
+public class SearchTweetPresenter extends BasePresenter<SearchView> {
 
     private static final Logger logger = Logger.getLogger(SearchTweetPresenter.class);
 
-    @Override
     public void search(String username) {
         logger.debug("search by username = " + username);
 
-        checkViewAttached();
-
-        if (!NetworkUtils.isInternetAvailable(getContext())) {
-            getView().showError(R.string.error_title, R.string.error_internet_required);
+        if (!NetworkUtils.isInternetAvailable(PublicTwitterClientApp.getsAppComponent().getContext())) {
+            getViewState().showError(R.string.error_title, R.string.error_internet_required);
         }
         else if (isUsernameValid(username)) {
             String searchText = username.contains("@") ? username : "@" + username;
-            getView().showTweets(searchText);
+            getViewState().showTweets(searchText);
         }
         else {
-            getView().showError(R.string.error_title_invalid_username, R.string.error_title_invalid_username_description);
+            getViewState().showError(R.string.error_title_invalid_username, R.string.error_title_invalid_username_description);
         }
     }
 

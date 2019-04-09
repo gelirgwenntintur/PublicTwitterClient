@@ -3,7 +3,7 @@
           package="com.twitterclient.test">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name="com.twitterclient.test.PublicTwitterClientApp"
@@ -14,9 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.twitterclient.test.mvp.search.SearchActivity"
+            android:name="com.twitterclient.test.ui.activities.SearchActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -25,8 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.twitterclient.test.mvp.tweet.TweetResultActivity"
-            android:screenOrientation="portrait"/>
+            android:name="com.twitterclient.test.ui.activities.TweetResultActivity"/>
     </application>
 
 </manifest>

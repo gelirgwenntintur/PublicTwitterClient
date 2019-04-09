@@ -1,4 +1,5 @@
-package com.twitterclient.test.mvp.tweet;
+
+package com.twitterclient.test.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +10,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.twitterclient.test.R;
-import com.twitterclient.test.api.data.Tweet;
-import com.twitterclient.test.api.data.User;
+import com.twitterclient.test.mvp.models.Tweet;
+import com.twitterclient.test.mvp.models.User;
 import com.twitterclient.test.utils.Logger;
 import com.twitterclient.test.utils.highlighter.HighlighterUtils;
 

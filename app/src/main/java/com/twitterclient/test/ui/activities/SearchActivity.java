@@ -1,4 +1,4 @@
-package com.twitterclient.test.mvp.search;
+package com.twitterclient.test.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,18 +9,22 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.twitterclient.test.PublicTwitterClientApp;
 import com.twitterclient.test.R;
-import com.twitterclient.test.mvp.BaseActivity;
-import com.twitterclient.test.Constants;
-import com.twitterclient.test.mvp.tweet.TweetResultActivity;
+import com.twitterclient.test.mvp.presenters.SearchTweetPresenter;
+import com.twitterclient.test.mvp.views.SearchView;
 import com.twitterclient.test.utils.DialogHelper;
 import com.twitterclient.test.utils.Logger;
 
-public class SearchActivity extends BaseActivity implements SearchTweetContract.View {
+public class SearchActivity extends BaseActivity implements SearchView {
 
     private static final Logger logger = Logger.getLogger(SearchActivity.class);
+    public static final String BUNDLE_PARAM_SEARCH_TEXT = PublicTwitterClientApp.get().getApplicationContext().getPackageName() + ".extra_param_search_text";
 
-    private SearchTweetPresenter presenter;
+    @InjectPresenter
+    SearchTweetPresenter presenter;
+
     private Button buttonSearch;
     private EditText editTextSearch;
 
@@ -42,14 +46,6 @@ public class SearchActivity extends BaseActivity implements SearchTweetContract.
                 presenter.search(editTextSearch.getText().toString());
             }
         });
-
-        presenter = new SearchTweetPresenter();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.attachView(this);
     }
 
     @Override
@@ -71,13 +67,6 @@ public class SearchActivity extends BaseActivity implements SearchTweetContract.
     }
 
     @Override
-    protected void onStop() {
-        logger.debug("onStop");
-        super.onStop();
-        presenter.detachView();
-    }
-
-    @Override
     public void onBackPressed() {
         logger.debug("onBackPressed");
         showExitDialog();
@@ -87,7 +76,7 @@ public class SearchActivity extends BaseActivity implements SearchTweetContract.
     public void showTweets(String username) {
         logger.debug("open tweet results by username = " + username);
         Intent intent = new Intent(this, TweetResultActivity.class);
-        intent.putExtra(Constants.BUNDLE_PARAM_SEARCH_TEXT, username);
+        intent.putExtra(BUNDLE_PARAM_SEARCH_TEXT, username);
         startActivity(intent);
     }
 

@@ -1,19 +1,19 @@
-package com.twitterclient.test.mvp;
+package com.twitterclient.test.ui.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.twitterclient.test.PublicTwitterClientApp;
 import com.twitterclient.test.R;
 import com.twitterclient.test.utils.DialogHelper;
 import com.twitterclient.test.utils.Logger;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends MvpAppCompatActivity {
 
     private static final Logger logger = Logger.getLogger(BaseActivity.class);
 

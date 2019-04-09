@@ -1,4 +1,4 @@
-package com.twitterclient.test.api.data;
+package com.twitterclient.test.mvp.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -24,10 +24,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User {" +
-                "id='" + id + '\'' +
-                ", screenName='" + screenName + '\'' +
-                ", profileImageUrl='" + profileImageUrl + '\'' +
-                '}';
+        return "User {" + "id='" + id + '\'' + ", screenName='" + screenName + '\'' + ", profileImageUrl='" + profileImageUrl + '\'' + '}';
     }
 }

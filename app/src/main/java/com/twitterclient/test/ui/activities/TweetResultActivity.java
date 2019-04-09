@@ -1,5 +1,6 @@
-package com.twitterclient.test.mvp.tweet;
+package com.twitterclient.test.ui.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -9,22 +10,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.twitterclient.test.R;
-import com.twitterclient.test.api.data.Tweet;
-import com.twitterclient.test.mvp.BaseActivity;
-import com.twitterclient.test.Constants;
+import com.twitterclient.test.mvp.models.Tweet;
+import com.twitterclient.test.mvp.presenters.TweetResultPresenter;
+import com.twitterclient.test.mvp.views.TweetResultsView;
+import com.twitterclient.test.ui.adapters.TweetResultAdapter;
 import com.twitterclient.test.utils.DialogHelper;
 import com.twitterclient.test.utils.Logger;
 
 import java.util.List;
 
-public class TweetResultActivity extends BaseActivity implements TweetResultsContract.View {
+import static com.twitterclient.test.ui.activities.SearchActivity.BUNDLE_PARAM_SEARCH_TEXT;
+
+public class TweetResultActivity extends BaseActivity implements TweetResultsView {
 
     private static final Logger logger = Logger.getLogger(TweetResultActivity.class);
 
-    private TweetPresenter presenter;
+    @InjectPresenter
+    TweetResultPresenter presenter;
+
     private TweetResultAdapter adapter;
     private ProgressBar progressBar;
+
+
+    @ProvidePresenter
+    TweetResultPresenter provideTweetResultPresenter(){
+        Bundle params = getIntent().getExtras();
+        String searchTextByUsername = null;
+        if (params != null) {
+            searchTextByUsername = params.getString(BUNDLE_PARAM_SEARCH_TEXT);
+        }
+        return new TweetResultPresenter(searchTextByUsername);
+    }
 
     @Override
     protected void onCreate(
@@ -36,7 +55,6 @@ public class TweetResultActivity extends BaseActivity implements TweetResultsCon
         setContentView(R.layout.activity_tweet);
 
         progressBar = findViewById(R.id.progressBarTweet);
-        progressBar.setVisibility(View.VISIBLE);
 
         RecyclerView recyclerViewTweets = findViewById(R.id.recyclerViewTweets);
         recyclerViewTweets.setHasFixedSize(true);
@@ -44,22 +62,6 @@ public class TweetResultActivity extends BaseActivity implements TweetResultsCon
         recyclerViewTweets.setLayoutManager(layoutManagerTweets);
         adapter = new TweetResultAdapter();
         recyclerViewTweets.setAdapter(adapter);
-
-        presenter = new TweetPresenter();
-        presenter.attachView(this);
-
-        Bundle params = getIntent().getExtras();
-        if (params != null) {
-            String searchTextByUsername = params.getString(Constants.BUNDLE_PARAM_SEARCH_TEXT);
-            presenter.search(searchTextByUsername);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        logger.debug("onStop");
-        presenter.detachView();
     }
 
     @Override
@@ -79,13 +81,17 @@ public class TweetResultActivity extends BaseActivity implements TweetResultsCon
         adapter.clear();
         adapter.setTweets(tweets);
         adapter.notifyDataSetChanged();
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(int stringId) {
         logger.debug("showError");
-        DialogHelper.showSingleButtonDialog(this, getString(stringId));
+        DialogHelper.showSingleButtonDialog(this, getString(stringId), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -95,4 +101,10 @@ public class TweetResultActivity extends BaseActivity implements TweetResultsCon
         actionBar.setTitle(title);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    public void showProgress(boolean isShown) {
+        progressBar.setVisibility(isShown ? View.VISIBLE : View.GONE);
+    }
 }
+

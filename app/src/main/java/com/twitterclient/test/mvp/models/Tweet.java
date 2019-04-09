@@ -1,4 +1,4 @@
-package com.twitterclient.test.api.data;
+package com.twitterclient.test.mvp.models;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -28,16 +28,18 @@ public class Tweet {
         return user;
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Tweet tweet = (Tweet) o;
 
         return id != null ? id.equals(tweet.id) : tweet.id == null;
-
     }
 
     @Override
@@ -47,11 +49,6 @@ public class Tweet {
 
     @Override
     public String toString() {
-        return "Tweet {" +
-                "createdAt='" + createdAt + '\'' +
-                ", id='" + id + '\'' +
-                ", text='" + text + '\'' +
-                ", user=" + user +
-                '}';
+        return "Tweet {" + "createdAt='" + createdAt + '\'' + ", id='" + id + '\'' + ", text='" + text + '\'' + ", user=" + user + '}';
     }
 }
